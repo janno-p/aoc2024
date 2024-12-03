@@ -8,6 +8,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sln", "sln", "{F46430AB-5D2F-48F6-87B3-0270F92D5DD3}"
 	ProjectSection(SolutionItems) = preProject
 		..\.gitignore = ..\.gitignore
+		..\README.md = ..\README.md
+		..\Run.ps1 = ..\Run.ps1
 	EndProjectSection
 EndProject
 Global
