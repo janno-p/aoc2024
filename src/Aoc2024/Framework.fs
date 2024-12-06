@@ -1,9 +1,11 @@
 ﻿module Aoc2024.Framework
 
+open FsSpectre
+open Microsoft.FSharp.Reflection
+open Spectre.Console
 open System
 open System.IO
 open System.Reflection
-open Microsoft.FSharp.Reflection
 
 type Solver =
     string -> int
@@ -20,6 +22,16 @@ module Solution =
     let create (firstPart: Solver) (secondPart: Solver) =
         { FirstPart = firstPart; SecondPart = secondPart }
 
+let numberOfDay (day: string) =
+    let num = Convert.ToInt32(day.Substring(3).TrimStart('0'))
+    let suffix =
+        match num % 10 with
+        | 1 when num <> 11 -> "st"
+        | 2 when num <> 12 -> "nd"
+        | 3 when num <> 13 -> "rd"
+        | _ -> "th"
+    $"%d{num}%s{suffix}"
+
 let run (dayModule: Type) =
     match dayModule.GetProperty("solution") with
     | null -> failwith "Solution not found"
@@ -30,8 +42,10 @@ let run (dayModule: Type) =
         let secondInputPath = Path.Combine("Data", $"%s{dayModule.Name}-2.txt")
         let secondInput = if File.Exists secondInputPath then File.ReadAllText(secondInputPath) else firstInput
         let solution = propertyInfo.GetValue(null) |> unbox<Solution>
-        firstInput |> solution.FirstPart |> printfn "Part 1 => %d"
-        secondInput |> solution.SecondPart |> printfn "Part 2 => %d"
+        let dayNum = numberOfDay dayModule.Name
+        AnsiConsole.MarkupLine($"[teal]Results of [b][red]{dayNum}[/][/] day:[/]")
+        AnsiConsole.MarkupLine(firstInput |> solution.FirstPart |> sprintf "Part 1 => [lime]%d[/]")
+        AnsiConsole.MarkupLine(secondInput |> solution.SecondPart |> sprintf "Part 2 => [lime]%d[/]")
 
 let dayRegex =
     System.Text.RegularExpressions.Regex(@"^Day\d{2}$")
