@@ -63,10 +63,10 @@ let countLoops map startPos startDir =
     let mutable count = 0
     for y in 0..maxY do
         for x in 0..maxX do
-            let original = map[y, x]
+            if map[y, x] <> '.' then () else
             map[y, x] <- '#'
             if isLoop map startPos startDir then count <- count + 1
-            map[y, x] <- original
+            map[y, x] <- '.'
     count
 
 let analyzeMap f: Solver = fun input ->
