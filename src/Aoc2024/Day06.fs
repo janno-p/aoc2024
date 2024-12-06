@@ -63,9 +63,10 @@ let countLoops map startPos startDir =
     let mutable count = 0
     for y in 0..maxY do
         for x in 0..maxX do
-            let copy = map |> Array2D.copy
-            copy[y, x] <- '#'
-            if isLoop copy startPos startDir then count <- count + 1
+            let original = map[y, x]
+            map[y, x] <- '#'
+            if isLoop map startPos startDir then count <- count + 1
+            map[y, x] <- original
     count
 
 let analyzeMap f: Solver = fun input ->
