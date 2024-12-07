@@ -59,15 +59,20 @@ let isLoop map startPos startDir =
     navMap (HashSet<_>()) startDir startPos
 
 let countLoops map startPos startDir =
-    let maxY, maxX = mapSize map
-    let mutable count = 0
-    for y in 0..maxY do
-        for x in 0..maxX do
-            if map[y, x] <> '.' then () else
+    let mapSize = mapSize map
+    let rec navMap (dir: Dir) (pos: int * int) n =
+        match sum pos dir.Delta with
+        | OutOfMap mapSize -> n
+        | y, x when map[y, x] = '#' ->
+            navMap (dir.Turn()) pos n
+        | newPos as (y, x) when map[y, x] = '.' ->
             map[y, x] <- '#'
-            if isLoop map startPos startDir then count <- count + 1
-            map[y, x] <- '.'
-    count
+            let d = if isLoop map pos (dir.Turn()) then 1 else 0
+            map[y, x] <- 'X'
+            navMap dir newPos (n + d)
+        | newPos ->
+            navMap dir newPos n
+    navMap startDir startPos 0
 
 let analyzeMap f: Solver = fun input ->
     use reader = new StringReader(input)
