@@ -1,6 +1,5 @@
 ﻿module Aoc2024.Framework
 
-open FsSpectre
 open Microsoft.FSharp.Reflection
 open Spectre.Console
 open System
@@ -8,18 +7,28 @@ open System.IO
 open System.Reflection
 
 type Solver =
-    string -> int
+    string -> int32
+
+type Solver64 =
+    string -> int64
 
 module Solver =
     let undefined: Solver = fun _ -> 0
+    let undefined64: Solver64 = fun _ -> 0
 
 type Solution = {
-    FirstPart: Solver
-    SecondPart: Solver
+    FirstPart: Solver64
+    SecondPart: Solver64
 }
+
+let i64 (solver: Solver) : Solver64 =
+    fun input -> solver input |> Convert.ToInt64
 
 module Solution =
     let create (firstPart: Solver) (secondPart: Solver) =
+        { FirstPart = firstPart |> i64; SecondPart = secondPart |> i64 }
+        
+    let create64 (firstPart: Solver64) (secondPart: Solver64) =
         { FirstPart = firstPart; SecondPart = secondPart }
 
 let numberOfDay (day: string) =

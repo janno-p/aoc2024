@@ -2,7 +2,6 @@
 
 open System
 open System.Collections.Generic
-open System.IO
 open Aoc2024.Framework
 
 type Dir =
@@ -75,10 +74,9 @@ let countLoops map startPos startDir =
     navMap startDir startPos 0
 
 let analyzeMap f: Solver = fun input ->
-    use reader = new StringReader(input)
     let map, startPos, startDir =
         let chars =
-            reader.ReadToEnd().Split('\n', StringSplitOptions.RemoveEmptyEntries ||| StringSplitOptions.TrimEntries)
+            input.Split('\n', StringSplitOptions.RemoveEmptyEntries ||| StringSplitOptions.TrimEntries)
             |> Array.map _.ToCharArray()
         let mutable startPos = (-1, -1)
         let mutable dir = Dir.Up

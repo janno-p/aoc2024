@@ -16,7 +16,7 @@ let distance: Solver = fun input ->
     let lst1, lst2 = readLists input
     List.zip (List.sort lst1) (List.sort lst2)
     |> List.map (fun (a, b) -> Math.Abs(a - b))
-    |> List.sum 
+    |> List.sum
 
 let similarity: Solver = fun input ->
     let lst1, lst2 = readLists input
