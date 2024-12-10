@@ -14,7 +14,9 @@ type Solver64 =
 
 module Solver =
     let undefined: Solver = fun _ -> 0
-    let undefined64: Solver64 = fun _ -> 0
+    
+module Solver64 =
+    let undefined: Solver64 = fun _ -> 0
 
 type Solution = {
     FirstPart: Solver64
