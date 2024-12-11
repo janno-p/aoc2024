@@ -4,7 +4,7 @@ open System
 open System.IO
 open Aoc2024.Framework
 
-let safeReports useDampener : Solver = fun input ->
+let safeReports useDampener (Input input) =
     let enumerate (levels: int list) =
         if useDampener then [for i in 1..levels.Length -> levels |> List.removeAt (i - 1)]
         else [levels]

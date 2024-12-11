@@ -3,7 +3,7 @@
 open System
 open Aoc2024.Framework
 
-let multiplications : Solver = fun input ->
+let multiplications (Input input) =
     let getOperand stopChar (span: char list) =
         if span.Length > 1 && Char.IsDigit(span[0]) then
             if span[1] = stopChar then Some(1)
@@ -29,11 +29,11 @@ let multiplications : Solver = fun input ->
         | None -> getSum (span.Substring(next + 4)) sum
     getSum input 0
 
-let enabledMultiplications : Solver = fun input ->
+let enabledMultiplications (Input input) =
     let rec getEnabledSum (span: string) sum =
         let blockEnd = span.IndexOf("don't()")
         let subSpan = if blockEnd < 0 then span else span.Substring(0, blockEnd)
-        let subSum = multiplications subSpan
+        let subSum = multiplications (Input subSpan)
         let nextStart = span.IndexOf("do()", subSpan.Length)
         if nextStart < 0 then sum + subSum else
         getEnabledSum (span.Substring(nextStart)) (sum + subSum)

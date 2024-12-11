@@ -26,7 +26,7 @@ let markNodes pos1 pos2 (width, height) findAll (nodeMap: HashSet<int>) =
     markNodesBefore (pos1_x, pos1_y)
     markNodesAfter (pos2_x, pos2_y)
 
-let antinodes findAll: Solver = fun input ->
+let antinodes findAll (Input input) =
     let lines = input.Split('\n', StringSplitOptions.TrimEntries ||| StringSplitOptions.RemoveEmptyEntries)
     let width, height = lines[0].ToCharArray().Length, lines.Length
     let map =

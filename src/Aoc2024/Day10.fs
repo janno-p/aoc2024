@@ -17,7 +17,7 @@ let directions =
 let isOnMap map (x, y) =
     x >= 0 && x < Array2D.length1 map && y >= 0 && y < Array2D.length2 map
 
-let trailheads: Solver = fun input ->
+let trailheads (Input input) =
     let map = readMap input
     let isOnMap = isOnMap map
     let scores = Array2D.init (Array2D.length1 map) (Array2D.length2 map) (fun _ _ -> Option<HashSet<int * int>>.None)
@@ -46,7 +46,7 @@ let trailheads: Solver = fun input ->
             sum <- sum + scoreAt.Length)
     sum
 
-let ratings: Solver = fun input ->
+let ratings (Input input) =
     let map = readMap input
     let isOnMap = isOnMap map
     let paths = Array2D.init (Array2D.length1 map) (Array2D.length2 map) (fun _ _ -> Option<int>.None)

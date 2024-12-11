@@ -73,7 +73,7 @@ let countLoops map startPos startDir =
             navMap dir newPos n
     navMap startDir startPos 0
 
-let analyzeMap f: Solver = fun input ->
+let analyzeMap func (Input input) =
     let map, startPos, startDir =
         let chars =
             input.Split('\n', StringSplitOptions.RemoveEmptyEntries ||| StringSplitOptions.TrimEntries)
@@ -85,7 +85,7 @@ let analyzeMap f: Solver = fun input ->
                 match chars[i][j] with '^' | '<' | '>' | 'v' as c -> startPos <- i, j; dir <- Dir.FromChar(c) | _ -> ()
                 chars[i][j])
         map, startPos, dir
-    f map startPos startDir
+    func map startPos startDir
 
 let solution =
     Solution.create (analyzeMap escape) (analyzeMap countLoops)

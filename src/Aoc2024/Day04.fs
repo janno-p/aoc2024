@@ -33,11 +33,11 @@ let countMas (i, w, h) (table: char array) =
     let d2 = match table[cti (x - 1) (y + 1)], table[cti (x + 1) (y - 1)] with 'M', 'S' | 'S', 'M' -> 1 | _ -> 0
     d1 * d2
 
-let counter f : Solver = fun input ->
+let counter func (Input input) =
     let lines = input.Split('\n', StringSplitOptions.TrimEntries ||| StringSplitOptions.RemoveEmptyEntries)
     let width, height = lines[0].ToCharArray().Length, lines.Length
     let table = lines |> Array.fold (fun (acc: ResizeArray<char>) r -> acc.AddRange(r.ToCharArray()); acc) (ResizeArray<char>()) |> Seq.toArray
-    table |> Seq.indexed |> Seq.map (fun (i, _) -> f (i, width, height) table) |> Seq.sum
+    table |> Seq.indexed |> Seq.map (fun (i, _) -> func (i, width, height) table) |> Seq.sum
 
 let solution =
     Solution.create (counter countXmas) (counter countMas)

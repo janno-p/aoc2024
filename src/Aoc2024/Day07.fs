@@ -23,7 +23,7 @@ let evaluate3op (testValue: int64, args: int64 list) =
         | x::xs ->  calc (acc * x) xs || calc (acc + x) xs || calc (concat acc x) xs
     calc (List.head args) (List.tail args)
 
-let totalCalibration (evaluate: int64 * int64 list -> bool): Solver64 = fun input ->
+let totalCalibration (evaluate: int64 * int64 list -> bool) (Input input) =
     let equations =
         input.Split('\n', StringSplitOptions.RemoveEmptyEntries ||| StringSplitOptions.TrimEntries)
         |> Seq.choose (fun row ->
@@ -40,4 +40,4 @@ let totalCalibration (evaluate: int64 * int64 list -> bool): Solver64 = fun inpu
     equations |> List.filter evaluate |> List.map fst |> List.sum
 
 let solution =
-    Solution.create64 (totalCalibration evaluate2op) (totalCalibration evaluate3op)
+    Solution.create (totalCalibration evaluate2op) (totalCalibration evaluate3op)

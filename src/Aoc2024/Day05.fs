@@ -58,12 +58,12 @@ let invalidOrderScore constraints pages =
         fixedOrder.Insert(i, fst)
     fixedOrder[fixedOrder.Count / 2]
 
-let calculate f : Solver = fun input ->
+let calculate func (Input input) =
     use reader = new StringReader(input)
     let constraints = parseConstraints reader
     reader.ReadToEnd().Split('\n', StringSplitOptions.RemoveEmptyEntries ||| StringSplitOptions.TrimEntries)
     |> Seq.map (fun row -> row.Split(',') |> Array.map Convert.ToInt32 |> Array.toList)
-    |> Seq.map (f constraints)
+    |> Seq.map (func constraints)
     |> Seq.sum
 
 let solution =

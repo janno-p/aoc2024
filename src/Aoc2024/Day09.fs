@@ -8,7 +8,7 @@ let readSequence (input: string) =
     |> Seq.map (fun c -> Convert.ToInt32(c - '0'))
     |> Seq.toList
 
-let compact: Solver64 = fun input ->
+let compact (Input input) =
     let disk =
         input
         |> readSequence
@@ -34,7 +34,7 @@ let compact: Solver64 = fun input ->
     |> Seq.mapi (fun i x -> Convert.ToInt64(i * x))
     |> Seq.sum
 
-let defragment: Solver64 = fun input ->
+let defragment (Input input) =
     let sequence = readSequence input
     let files = ResizeArray(sequence |> Seq.mapi (fun i x -> (i, x)) |> Seq.filter (fun (i, _) -> i % 2 = 0) |> Seq.map (fun (i, x) -> (x, i / 2, false)))
     let gaps = ResizeArray(sequence |> Seq.mapi (fun i x -> (i, x)) |> Seq.filter (fun (i, _) -> i % 2 = 1) |> Seq.map snd)
@@ -66,4 +66,4 @@ let defragment: Solver64 = fun input ->
     checksum
 
 let solution =
-    Solution.create64 compact defragment
+    Solution.create compact defragment

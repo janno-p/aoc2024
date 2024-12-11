@@ -12,13 +12,13 @@ let readLists (input: string) =
     |> Seq.map splitRowToValues
     |> Seq.fold (fun (lst1, lst2) (v1, v2) -> (v1::lst1, v2::lst2)) ([], [])
 
-let distance: Solver = fun input ->
+let distance (Input input) =
     let lst1, lst2 = readLists input
     List.zip (List.sort lst1) (List.sort lst2)
     |> List.map (fun (a, b) -> Math.Abs(a - b))
     |> List.sum
 
-let similarity: Solver = fun input ->
+let similarity (Input input) =
     let lst1, lst2 = readLists input
     let scores =
         lst2
